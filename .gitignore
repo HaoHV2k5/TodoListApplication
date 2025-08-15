@@ -1,0 +1,99 @@
+####################################
+# Backend (Spring Boot)
+####################################
+
+# Maven
+Backend/target/
+Backend/pom.xml.tag
+Backend/pom.xml.releaseBackup
+Backend/pom.xml.versionsBackup
+Backend/pom.xml.next
+Backend/release.properties
+Backend/dependency-reduced-pom.xml
+Backend/buildNumber.properties
+
+# Gradle
+Backend/.gradle/
+Backend/build/
+!Backend/gradle/wrapper/gradle-wrapper.jar
+Backend/gradle-app.setting
+
+# STS (Spring Tool Suite)
+Backend/.apt_generated
+Backend/.classpath
+Backend/.factorypath
+Backend/.project
+Backend/.settings
+Backend/.springBeans
+Backend/bin/
+
+# IntelliJ IDEA
+Backend/.idea/
+Backend/*.iws
+Backend/*.iml
+Backend/*.ipr
+Backend/out/
+
+# VS Code
+Backend/.vscode/
+
+# Logs
+Backend/*.log
+Backend/logs/
+Backend/log/
+
+# Temp files
+Backend/*.tmp
+Backend/*.bak
+Backend/*.swp
+
+####################################
+# Frontend (React.js)
+####################################
+
+# Dependencies
+Frontend/node_modules/
+
+# Build output
+Frontend/build/
+Frontend/dist/
+
+# Logs
+Frontend/npm-debug.log*
+Frontend/yarn-debug.log*
+Frontend/yarn-error.log*
+Frontend/pnpm-debug.log*
+
+# Editor settings
+Frontend/.vscode/
+Frontend/.idea/
+
+# Testing
+Frontend/coverage/
+
+# Env files (API keys, secrets)
+Frontend/.env
+Frontend/.env.local
+Frontend/.env.development.local
+Frontend/.env.test.local
+Frontend/.env.production.local
+
+# Misc temp files
+Frontend/*.tmp
+Frontend/*.swp
+
+####################################
+# Common ignores for the whole repo
+####################################
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# General logs
+*.log
+
+# General temp files
+*.tmp
+*.bak
+*.swp
