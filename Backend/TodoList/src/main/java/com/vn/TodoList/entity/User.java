@@ -1,5 +1,6 @@
 package com.vn.TodoList.entity;
 
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.Entity;
@@ -8,6 +9,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
@@ -33,9 +35,8 @@ public class User {
     @JoinTable(name = "user_task", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "task_id"))
     Set<Task> tasks;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    Category categories;
+    @OneToMany(mappedBy = "userID")
+    Set<Category> categories;
 
     public User(String username, String password) {
         this.username = username;
