@@ -22,7 +22,7 @@ public class Schedule {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
-    @Column(columnDefinition = "nvarchar")
+    @Column(length = 500)
 
     String title;
     int day;
