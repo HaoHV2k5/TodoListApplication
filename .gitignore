@@ -47,6 +47,12 @@ Backend/*.tmp
 Backend/*.bak
 Backend/*.swp
 
+# Ignore Spring Boot config files
+src/main/resources/application.properties
+src/main/resources/application-*.properties
+src/main/resources/application.yml
+src/main/resources/application-*.yml
+
 ####################################
 # Frontend (React.js)
 ####################################
