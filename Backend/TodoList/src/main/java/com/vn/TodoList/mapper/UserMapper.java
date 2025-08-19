@@ -1,17 +1,19 @@
 package com.vn.TodoList.mapper;
 
+import org.springframework.security.core.userdetails.UserDetails;
+
 import com.vn.TodoList.dto.request.UserRequest;
-import com.vn.TodoList.dto.response.UserResponse;
+import com.vn.TodoList.dto.response.AuthenticationResponse;
 import com.vn.TodoList.entity.User;
 
 public class UserMapper {
-    public static UserResponse toResponse(User user) {
+    public static AuthenticationResponse toResponse(User user, String token) {
         if (user == null) {
             return null;
         }
-        UserResponse response = new UserResponse();
-        response.setUsername(user.getUsername());
-        response.setEmail(user.getEmail());
+        AuthenticationResponse response = new AuthenticationResponse();
+        response.setName(user.getName());
+        response.setToken(token);
         return response;
     }
 
@@ -22,8 +24,20 @@ public class UserMapper {
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(request.getPassword());
-        user.setEmail(request.getEmail());
         return user;
     }
-    
+
+    public static UserDetails toUserDetails(User user) {
+        if (user == null) {
+            return null;
+        }
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getUsername())
+                .password(user.getPassword())
+                .accountExpired(false)
+                .accountLocked(false)
+                .credentialsExpired(false)
+                .disabled(false)
+                .build();
+    }
 }

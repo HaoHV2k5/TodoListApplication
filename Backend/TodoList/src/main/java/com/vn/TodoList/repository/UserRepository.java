@@ -6,8 +6,10 @@ import org.springframework.stereotype.Repository;
 import com.vn.TodoList.entity.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, String> {    
+public interface UserRepository extends JpaRepository<User, String> {
     boolean existsByUsername(String username);
-    
+
+    User findByUsername(String username);
+
     boolean existsByEmail(String email);
 }

@@ -5,6 +5,6 @@ import com.vn.TodoList.entity.User;
 
 public class AuthenticationMapper {
     public static AuthenticationResponse toResponse(User user, String token) {
-        return new AuthenticationResponse(token, user.getUsername(), user.getPassword());
+        return new AuthenticationResponse(token, user.getName());
     }
 }

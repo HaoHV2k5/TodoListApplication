@@ -1,15 +1,20 @@
 package com.vn.TodoList.controller;
 
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.vn.TodoList.config.JwtUtils;
 import com.vn.TodoList.dto.request.UserRequest;
 import com.vn.TodoList.dto.response.ApiResponse;
-import com.vn.TodoList.dto.response.UserResponse;
+import com.vn.TodoList.dto.response.AuthenticationResponse;
 import com.vn.TodoList.exception.AppException;
 import com.vn.TodoList.model.ErrorCode;
 import com.vn.TodoList.service.UserService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -24,37 +29,75 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ApiResponse<UserResponse> registerUser(@RequestBody UserRequest userRequest) {        
-        UserResponse user = userService.registerUser(userRequest);
+    public ApiResponse<AuthenticationResponse> registerUser(@RequestBody @Valid UserRequest userRequest) {
+        if(userRequest.getUsername() == null) {
+            throw new AppException(ErrorCode.MISSING_USERNAME);
+        }
+
+        if(userRequest.getPassword() == null) {
+            throw new AppException(ErrorCode.MISSING_PASSWORD);
+        }
+
+        if (userRequest.getConfirmPassword() == null || 
+            !userRequest.getPassword().trim().equals(userRequest.getConfirmPassword().trim())) {
+            throw new AppException(ErrorCode.PASSWORD_MISMATCH);
+        }
+
+        AuthenticationResponse user = userService.registerUser(userRequest);
         return new ApiResponse<>("User registered successfully", user);
     }
 
-    // FIX
     @PutMapping("/updateEmail")
-    public ApiResponse<UserResponse> updateEmail(@RequestBody UserRequest userRequest, @RequestBody String username) {
-        if (username == null || username.trim().isEmpty()) {
-            throw new AppException(ErrorCode.MISSING_USERNAME); // Handle missing username
+    public ApiResponse<AuthenticationResponse> updateEmail(@RequestHeader("Authorization") String authorizationHeader, @RequestBody UserRequest userRequest) {
+        String token = JwtUtils.getTokenFromHeader(authorizationHeader);
+        if (token == null || token.isEmpty()) {
+            throw new AppException(ErrorCode.MISSING_TOKEN);
         }
 
-        UserResponse user = userService.updateEmail(username, userRequest);
+        if(userRequest.getUsername() == null) {
+            throw new AppException(ErrorCode.INVALID_USERNAME);
+        }
+
+        String username = userService.getUsernameFromToken(token);
+
+        AuthenticationResponse user = userService.updateEmail(username, userRequest);
 
         return new ApiResponse<>("User updated email successfully", user);
     }
     
-    // FIX
     @PutMapping("/updatePassword")
-    public ApiResponse<UserResponse> updatePassword(@RequestBody UserRequest userRequest, @RequestBody String username) {
-        if (username == null || username.trim().isEmpty()) {
-            throw new AppException(ErrorCode.MISSING_USERNAME); // Handle missing username
+    public ApiResponse<AuthenticationResponse> updatePassword(@RequestHeader("Authorization") String authorizationHeader, @RequestBody UserRequest userRequest) {
+        String token = JwtUtils.getTokenFromHeader(authorizationHeader);
+        if (token == null || token.isEmpty()) {
+            throw new AppException(ErrorCode.MISSING_TOKEN);
         }
 
-        UserResponse user = userService.updatePassword(username, userRequest);
+        if(userRequest.getPassword() == null) {
+            throw new AppException(ErrorCode.INVALID_PASSWORD);
+        }
+
+        String username = userService.getUsernameFromToken(token);
+
+        AuthenticationResponse user = userService.updatePassword(username, userRequest);
 
         return new ApiResponse<>("User updated password successfully", user);
     }
-    
-    // public ResponseEntity<User> loginUser(@RequestParam String username, @RequestParam String password) {
-    //          return ResponseEntity.ok(userService.loginUser(username, password));
-    //      }
 
+    @PutMapping("/updateName")
+    public ApiResponse<AuthenticationResponse> updateName(@RequestHeader("Authorization") String authorizationHeader, @RequestBody UserRequest userRequest) {
+        String token = JwtUtils.getTokenFromHeader(authorizationHeader);
+        if (token == null || token.isEmpty()) {
+            throw new AppException(ErrorCode.MISSING_TOKEN);
+        }
+
+        if(userRequest.getName() == null) {
+            throw new AppException(ErrorCode.INVALID_NAME);
+        }
+
+        String username = userService.getUsernameFromToken(token);
+
+        AuthenticationResponse user = userService.updateName(username, userRequest);
+
+        return new ApiResponse<>("User updated password successfully", user);
+    }
 }

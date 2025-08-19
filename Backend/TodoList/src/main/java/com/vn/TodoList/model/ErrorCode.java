@@ -12,6 +12,13 @@ public enum ErrorCode {
     TOKEN_EXPIRED(9, "Token has expired"),
     UNAUTHORIZED(10, "Unauthorized access"),
     MISSING_TOKEN(11, "Token is required"),
+    INVALID_NAME(12, "Name is required"),
+    INVALID_EMAIL(13, "Invalid email format"),
+    INVALID_PASSWORD(14, "Invalid password format"),
+    PASSWORD_MISMATCH(15, "Passwords do not match"),
+    INVALID_USERNAME(16, "Invalid username format"),
+    PASSSWORD_MISMATCH(17, "Password mismatch"),
+    INVALID_CONFIRM_PASSWORD(18, "Confirm password is required"),
     INTERNAL_VALIDATE_KEY_ERROR(998, "Internal server error"),
     INTERNAL_SERVER_ERROR(999, "Internal server error");
 
