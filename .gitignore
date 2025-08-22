@@ -12,6 +12,9 @@ Backend/release.properties
 Backend/dependency-reduced-pom.xml
 Backend/buildNumber.properties
 
+# Spring Boot sensitive config
+Backend/TodoList/src/main/resources/application.properties
+
 # Gradle
 Backend/.gradle/
 Backend/build/
@@ -47,11 +50,7 @@ Backend/*.tmp
 Backend/*.bak
 Backend/*.swp
 
-# Ignore Spring Boot config files
-src/main/resources/application.properties
-src/main/resources/application-*.properties
-src/main/resources/application.yml
-src/main/resources/application-*.yml
+
 
 ####################################
 # Frontend (React.js)

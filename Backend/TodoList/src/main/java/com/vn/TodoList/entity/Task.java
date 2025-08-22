@@ -44,6 +44,7 @@ public class Task {
     @Enumerated(EnumType.STRING)
     Priority priority;
     boolean status;
-    @ManyToMany(mappedBy = "tasks")
-    Set<User> userID;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User userID;
 }

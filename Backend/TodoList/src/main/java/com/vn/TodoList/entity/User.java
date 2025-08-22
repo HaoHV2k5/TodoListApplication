@@ -1,5 +1,6 @@
 package com.vn.TodoList.entity;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -31,8 +32,7 @@ public class User {
     private String username;
     private String password;
     private String email;
-    @ManyToMany
-    @JoinTable(name = "user_task", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "task_id"))
+    @OneToMany(mappedBy = "userID")
     Set<Task> tasks;
 
     @OneToMany(mappedBy = "userID")
@@ -42,5 +42,9 @@ public class User {
         this.username = username;
         this.password = password;
     }
+
+    boolean active = false;
+    String otp;
+    LocalDateTime otpExpireTime;
 
 }
